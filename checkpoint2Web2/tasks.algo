@@ -1,0 +1,105 @@
+ALGORITHM task1
+/*You are asked to write an algorithm that fulfills the following: 
+
+Name: Dot product
+Description:
+        - Write a function, called dot_product which calculates in the variable ps, the dot(scalar) product of v1 and v2 (v1 and v2 are vectors of IR)
+        - Write an algorithm which determines, for n pairs of given vectors, whether two vectors of given IR are orthogonal, by calling the procedure defined in the previous question. 
+            The dot product of two orthogonal vectors is zero.*/
+
+VAR 
+    n,i,j: INTEGER;
+    v1: ARRAY_OF INTEGER[5];
+    v2: ARRAY_OF INTEGER[5];
+    v3: ARRAY_OF INTEGER[5];
+    v4: ARRAY_OF INTEGER[5];
+    v: ARRAY_OF ARRAY_OF INTEGER[4]; //4=n
+BEGIN
+    v={v1,v2,v3,v4};
+    n:= 4; //number of vectors
+    FOR i FROM 1 TO n STEP 1 DO
+        FOR j FROM 1 TO n STEP 1 DO
+            IF (j<>i) THEN 
+                IF (dot_product(v[i], v[j])==0) THEN 
+                    Write("vector n°"+(i)+" & vector n°"+(j)+" are orthogonal");
+                END_IF
+            END_IF
+        END_FOR 
+    END_FOR
+    Write("end of program");
+END
+
+FUNCTION dot_product(v1, v2: ARRAY_OF INTEGER): INTEGER
+VAR 
+    ps, i: INTEGER;
+BEGIN
+    FOR i FROM 0 TO v1.length STEP 1 DO
+        ps:= ps + (v1[i]*v2[i]);
+    END_FOR 
+    RETURN ps;
+END
+
+
+
+
+ALGORITHM task2
+
+/*Second Task:
+Insertion sort is a simple sorting algorithm that works the way we sort playing cards in our hands. Each time we take a new card we put it in the right place in our hand.
+- Each time work only with the first i-1 element from of the array
+- Pick element arr[i] and insert it into sorted sequence in the array from 0 to i-1.*/
+
+VAR
+    arr: ARRAY_OF INTEGER[5];
+    i: INTEGER;
+BEGIN
+    // unsorted version
+    FOR i FROM 0 TO arr.length-1 STEP 1 DO
+        Write(arr[i] + "\n");
+    END_FOR
+
+    insertion_sort(arr);
+    // sorted version    
+    FOR i FROM 0 TO arr.length-1 STEP 1 DO
+        Write(arr[i] + "\n");
+    END_FOR
+
+END
+
+PROCEDURE insertion_sort(VAR arr: ARRAY_OF INTEGER)
+VAR
+    i,j,val, pos: INTEGER;
+BEGIN
+    //initalizing values
+    pos:=0;
+    val:= 0;
+    /*
+    //sorting values of array from 1 to arr.length -1 (min to max) 
+        FOR i FROM 1 TO arr.length-1 STEP 1 DO
+            val:= arr[i]; //storing value of arr[i] to not lose it when swapping
+            j:=i-1;
+
+            WHILE (arr[i]<arr[j] AND j>=0) DO  //looping through sorted list until first element of sorted list
+                arr[j+1]:=arr[j];    //shifting elements to the right
+                j:=j-1;
+            END_WHILE   
+            
+            //swap pos element with value of arr[i]
+            arr[j+1]:= val;
+        END_FOR
+    */
+
+   //sorting values of array from arr.length -1 to 1 (min to max) 
+    FOR i FROM arr.length-2 TO 0 STEP -1 DO
+        val:= arr[i]; //storing value of arr[i] to not lose it when swapping
+        j:=i+1;
+
+        WHILE (arr[i]>arr[j] AND j<arr.length) DO  //looping through sorted list until first element of sorted list
+            arr[j-1]:=arr[j];    //shifting elements to the right
+            j:=j+1;
+        END_WHILE   
+        
+        //swap pos element with value of arr[i]
+        arr[j-1]:= val;
+    END_FOR
+END
